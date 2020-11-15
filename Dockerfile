@@ -9,8 +9,8 @@ RUN git clone https://github.com/llvm/llvm-project.git llvm && \
     cd llvm && git checkout e39d7884a1f5c5c7136ba2e493e9ac313ccc78ed && cd ..
 
 RUN mkdir build && cd build && \
-    cmake -DCMAKE_BUILD_TYPE=Release -DCLANG_ENABLE_BOOTSTRAP=ON -DCMAKE_INSTALL_PREFIX=/tmp/llvm -DLLVM_TARGETS_TO_BUILD="X86" -DLLVM_INSTALL_TOOLCHAIN_ONLY=ON -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;" -DLLVM_DISTRIBUTION_COMPONENTS="clang-format;clang-tidy" -G "Ninja" ../llvm/llvm && \
-    cmake --build . --target stage2
+    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/tmp/llvm -DLLVM_TARGETS_TO_BUILD="X86" -DLLVM_INSTALL_TOOLCHAIN_ONLY=ON -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;" -DLLVM_DISTRIBUTION_COMPONENTS="clang-format;clang-tidy" -G "Ninja" ../llvm/llvm && \
+    cmake --build .
 
 RUN cd build && \
     cmake --build . --target install-distribution
