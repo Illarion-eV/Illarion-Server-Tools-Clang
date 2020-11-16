@@ -18,8 +18,10 @@ RUN cd build && \
 FROM debian:buster
 COPY --from=build /tmp/llvm/ /usr/local/
 VOLUME /src
+VOLUME /build
 WORKDIR /src
 RUN apt-get -qq update && \                                                                                              
     export DEBIAN_FRONTEND=noninteractive && \                                                                           
     apt-get -y -qq install python3 cmake g++ git libboost-graph-dev libboost-system-dev libpqxx-dev lua5.2-dev && \
     apt-get -qq clean
+COPY run-clang-tidy.sh /usr/local/bin/
