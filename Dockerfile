@@ -9,7 +9,7 @@ RUN git clone https://github.com/llvm/llvm-project.git llvm && \
     cd llvm && git checkout e39d7884a1f5c5c7136ba2e493e9ac313ccc78ed && cd ..
 
 RUN mkdir build && cd build && \
-    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/tmp/llvm -DLLVM_TARGETS_TO_BUILD="X86" -DLLVM_INSTALL_TOOLCHAIN_ONLY=ON -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;" -DLLVM_DISTRIBUTION_COMPONENTS="clang-format;clang-tidy" -G "Ninja" ../llvm/llvm && \
+    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/tmp/llvm -DLLVM_TARGETS_TO_BUILD="X86" -DLLVM_INSTALL_TOOLCHAIN_ONLY=ON -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;" -DLLVM_DISTRIBUTION_COMPONENTS="clang;clang-format;clang-tidy" -G "Ninja" ../llvm/llvm && \
     cmake --build .
 
 RUN cd build && \
@@ -21,5 +21,5 @@ VOLUME /src
 WORKDIR /src
 RUN apt-get -qq update && \                                                                                              
     export DEBIAN_FRONTEND=noninteractive && \                                                                           
-    apt-get -y -qq install python3 && \
+    apt-get -y -qq install python3 cmake g++ git libboost-graph-dev libboost-system-dev libpqxx-dev lua5.2-dev && \
     apt-get -qq clean
