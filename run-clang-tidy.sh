@@ -1,6 +1,6 @@
 cd /build
 cmake /src
-python3 /usr/local/share/clang/run-clang-tidy.py -j $(nproc) /src/src/.* > tidy.out
+python3 /usr/local/share/clang/run-clang-tidy.py -j $(nproc) -quiet -header-filter="^/src/src/.*" /src/src/.* > tidy.out
 cat tidy.out | sed '/^clang-tidy/,$!d' | sed '/^clang-tidy/d' | awk '!a[$0]++' RS="/src/src/" ORS="" > tidy.deduplicated
 sed -i '/\/src\/src\//src\//g' tidy.deduplicated
 cat tidy.deduplicated
