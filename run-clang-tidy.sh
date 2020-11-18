@@ -1,8 +1,7 @@
 cd /build
 cmake /src
 python3 /usr/local/share/clang/run-clang-tidy.py -j $(nproc) -quiet -header-filter="^/src/src/.*" /src/src/.* > tidy.out
-cat tidy.out | sed '/^clang-tidy/,$!d' | sed '/^clang-tidy/d' | awk '!a[$0]++' RS="/src/src/" ORS="" > tidy.deduplicated
-sed -i 's/\/src\/src\//src\//' tidy.deduplicated
+cat tidy.out | sed '/^clang-tidy/,$!d' | sed '/^clang-tidy/d' | awk '!a[$0]++' RS="/src/" ORS="" > tidy.deduplicated
 cat tidy.deduplicated
 echo "\nSummary:\n"
 grep -oP '\[.*?-.*?\]' tidy.deduplicated | sort | uniq -c | sort -nr | tee /dev/tty | awk '{total = total + $1}END{print "  ",total,"warnings"}'
