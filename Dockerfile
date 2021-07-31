@@ -1,4 +1,4 @@
-FROM debian:buster AS build
+FROM debian:bullseye AS build
 WORKDIR /src
 RUN \
     apt-get -qq update && \
@@ -15,13 +15,15 @@ RUN mkdir build && cd build && \
 RUN cd build && \
     cmake --build . --target install-distribution
 
-FROM debian:buster
+FROM debian:bullseye
 COPY --from=build /tmp/llvm/ /usr/local/
 VOLUME /src
 VOLUME /build
 WORKDIR /src
 RUN apt-get -qq update && \                                                                                              
     export DEBIAN_FRONTEND=noninteractive && \                                                                           
-    apt-get -y -qq install python3 cmake g++ git libboost-graph-dev libboost-system-dev libpqxx-dev lua5.2-dev && \
-    apt-get -qq clean
+    apt-get -y -qq install python3 wget g++ git libboost-graph-dev libboost-system-dev libpqxx-dev lua5.2-dev && \
+    apt-get -qq clean && \
+    wget https://github.com/Kitware/CMake/releases/download/v3.21.1/cmake-3.21.1-linux-x86_64.sh -O cmake.sh -q && \
+    sh cmake.sh --skip-license --prefix=/usr/local && rm -f cmake.sh
 COPY run-clang-tidy.sh /usr/local/bin/
