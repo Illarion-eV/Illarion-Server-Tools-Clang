@@ -22,7 +22,7 @@ VOLUME /build
 WORKDIR /src
 RUN apt-get -qq update && \                                                                                              
     export DEBIAN_FRONTEND=noninteractive && \                                                                           
-    apt-get -y -qq install python3 wget g++ git libboost-graph-dev libboost-system-dev libpqxx-dev lua5.2-dev && \
+    apt-get -y -qq install python3 wget g++ git libboost-graph-dev libboost-system-dev lua5.2-dev && \
     apt-get -qq clean && \
     wget https://github.com/Kitware/CMake/releases/download/v3.21.1/cmake-3.21.1-linux-x86_64.sh -O cmake.sh -q && \
     sh cmake.sh --skip-license --prefix=/usr/local && rm -f cmake.sh
